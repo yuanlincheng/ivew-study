@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+    <!--<link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">-->
+    <!--<script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>-->
+    <!--<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="css/iview.css">
+    <script type="text/javascript" src="js/vue.min.js"></script>
+    <script type="text/javascript" src="js/iview.min.js"></script>
+</head>
+<body>
+<div id="app-grid">
+    <Row>
+        <i-col span="12">col-12</i-col>
+        <i-col span="12">col-12</i-col>
+    </Row>
+    <br>
+    <Row>
+        <i-col span="8">col-8</i-col>
+        <i-col span="8">col-8</i-col>
+        <i-col span="8">col-8</i-col>
+    </Row>
+    <br>
+    <Row :gutter="16">
+        <i-col span="6">
+            <div>col-6</div>
+        </i-col>
+        <i-col span="6">
+            <div>col-6</div>
+        </i-col>
+        <i-col span="6">
+            <div>col-6</div>
+        </i-col>
+        <i-col span="6">
+            <div>col-6</div>
+        </i-col>
+    </Row>
+    <br>
+    <Row type="flex">
+        <i-col span="6" order="4">1 | order-4</i-col>
+        <i-col span="6" order="3">2 | order-3</i-col>
+        <i-col span="6" order="2">3 | order-2</i-col>
+        <i-col span="6" order="1">4 | order-1</i-col>
+    </Row>
+    <br>
+    <Row>
+        <i-col span="18" push="6">col-18 | push-6</i-col>
+        <i-col span="6" pull="18">col-6 | pull-18</i-col>
+    </Row>
+    <br>
+    <Row>
+        <i-col span="8">col-8</i-col>
+        <i-col span="8" offset="8">col-8 | offset-8</i-col>
+    </Row>
+    <br>
+    <p>子元素居中排列</p>
+    <template>
+    <Row type="flex" justify="center" class="code-row-bg">
+        <i-col span="4">col-4</i-col>
+        <i-col span="4">col-4</i-col>
+        <i-col span="4">col-4</i-col>
+        <i-col span="4">col-4</i-col>
+    </Row>
+    </template>
+    <br>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app-grid',
+    })
+</script>
+</body>
+</html>

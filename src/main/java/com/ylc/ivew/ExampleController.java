@@ -27,4 +27,9 @@ public class ExampleController {
     public String layout() {
         return "example/layout";
     }
+
+    @GetMapping("/grid")
+    public String grid() {
+        return "example/grid";
+    }
 }
