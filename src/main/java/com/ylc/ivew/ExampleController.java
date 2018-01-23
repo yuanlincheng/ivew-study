@@ -52,4 +52,9 @@ public class ExampleController {
     public String table() {
         return "example/table";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "example/login";
+    }
 }
