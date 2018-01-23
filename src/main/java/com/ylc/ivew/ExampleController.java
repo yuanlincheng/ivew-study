@@ -32,4 +32,24 @@ public class ExampleController {
     public String grid() {
         return "example/grid";
     }
+
+    @GetMapping("/button")
+    public String button() {
+        return "example/button";
+    }
+
+    @GetMapping("/icon")
+    public String icon() {
+        return "example/icon";
+    }
+
+    @GetMapping("/input")
+    public String input() {
+        return "example/input";
+    }
+
+    @GetMapping("/table")
+    public String table() {
+        return "example/table";
+    }
 }

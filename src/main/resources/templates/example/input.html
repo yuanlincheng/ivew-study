@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+    <!--<link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">-->
+    <!--<script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>-->
+    <!--<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="css/iview.css">
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/iview.min.js"></script>
+</head>
+<body>
+<div id="app-input">
+    <i-input :value.sync="value" placeholder="请输入..." style="width: 300px"></i-input>
+    <i-input icon="ios-clock-outline" placeholder="请输入..." style="width: 200px"></i-input>
+    <i-input type="textarea" :rows="4" placeholder="请输入..."></i-input>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app-input',
+        data () {
+            return {
+                value: 'sdfasfsdf'
+            }
+        }
+    })
+</script>
+</body>
+</html>
