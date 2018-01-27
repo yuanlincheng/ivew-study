@@ -57,4 +57,9 @@ public class ExampleController {
     public String login() {
         return "example/login";
     }
+
+    @GetMapping("/main")
+    public String main() {
+        return "example/main";
+    }
 }
