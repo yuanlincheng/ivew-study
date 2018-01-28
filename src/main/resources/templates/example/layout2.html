@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+    <link rel="stylesheet" type="text/css" href="style/iview.css">
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/iview.min.js"></script>
+    <style scoped>
+        .layout-con{
+            height: 100%;
+            width: 100%;
+        }
+        .logo-con {
+            padding: 8px;
+            text-align: center;
+        }
+        .logo-con img {
+            height: 44px;
+            width: auto;
+        }
+        .main-header {
+            height: 60px;
+            background: #fff;
+            box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);
+            position: relative;
+            z-index: 11;
+        }
+        .main-header i {
+            margin: 20px 20px 0;
+        }
+        .header-icon {
+            margin-top: 22px;
+        }
+        .layout-header-bar{
+            background: #fff;
+            box-shadow: 0 1px 1px rgba(0,0,0,.1);
+        }
+        .layout-logo-left{
+            width: 90%;
+            height: 30px;
+            background: #5b6270;
+            border-radius: 3px;
+            margin: 15px auto;
+        }
+        .menu-icon{
+            transition: all .3s;
+        }
+        .rotate-icon{
+            transform: rotate(-90deg);
+        }
+        .menu-item span{
+            display: inline-block;
+            overflow: hidden;
+            width: 69px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: bottom;
+            transition: width .2s ease .2s;
+        }
+        .menu-item i{
+            transform: translateX(0px);
+            transition: font-size .2s ease, transform .2s ease;
+            vertical-align: middle;
+            font-size: 16px;
+        }
+        .collapsed-menu span{
+            width: 0px;
+            transition: width .2s ease;
+        }
+        .collapsed-menu i{
+            transform: translateX(5px);
+            transition: font-size .2s ease .2s, transform .2s ease .2s;
+            vertical-align: middle;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+<div id="app-layout" class="layout">
+    <Layout :style="{minHeight: '100vh'}">
+        <Sider ref="sider" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
+            <div class="logo-con">
+                <img v-show="!shrink"  src="image/logo.jpg" key="max-logo" />
+                <img v-show="shrink" src="image/logo-min.jpg" key="min-logo" />
+            </div>
+            <i-menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses" :open-names="['1']">
+                <Submenu name="1">
+                    <template slot="title">
+                        <Icon type="ios-navigate"></Icon>
+                        <span>Item 1</span>
+                    </template>
+                    <menu-item name="1-1">Option 1</menu-item>
+                    <menu-item name="1-2">Option 2</menu-item>
+                    <menu-item name="1-3">Option 3</menu-item>
+                </Submenu>
+                <Submenu name="2">
+                    <template slot="title">
+                        <Icon type="search"></Icon>
+                        <span>Item 2</span>
+                    </template>
+                    <menu-item name="2-1">Option 1</menu-item>
+                    <menu-item name="2-2">Option 2</menu-item>
+                    <menu-item name="2-3">Option 3</menu-item>
+                </Submenu>
+                <Submenu name="3">
+                    <template slot="title">
+                        <Icon type="settings"></Icon>
+                        <span>Item 3</span>
+                    </template>
+                    <menu-item name="1-1">Option 1</menu-item>
+                    <menu-item name="1-2">Option 2</menu-item>
+                    <menu-item name="1-3">Option 3</menu-item>
+                </Submenu>
+            </i-menu>
+        </Sider>
+        <Layout>
+            <Header class="main-header">
+                <Row>
+                    <i-col span="1">
+                        <Icon @click.native="collapsedSider" :class="rotateIcon" type="navicon-round" size="24"></Icon>
+                    </i-col>
+                    <i-col span="4">
+                        <Breadcrumb class="header-icon">
+                            <breadcrumb-item>首页</breadcrumb-item>
+                            <breadcrumb-item>用户管理</breadcrumb-item>
+                            <breadcrumb-item>添加用户</breadcrumb-item>
+                        </Breadcrumb>
+                    </i-col>
+                    <i-col span="4" offset="8">
+                        <Menu mode="horizontal" theme="dark" active-name="1">
+                            <div class="layout-logo"></div>
+                            <div class="layout-nav">
+                                <MenuItem name="1">
+                                    <Icon type="ios-navigate"></Icon>
+                                    Item 1
+                                </MenuItem>
+                                <MenuItem name="2">
+                                    <Icon type="ios-keypad"></Icon>
+                                    Item 2
+                                </MenuItem>
+                                <MenuItem name="3">
+                                    <Icon type="ios-analytics"></Icon>
+                                    Item 3
+                                </MenuItem>
+                                <MenuItem name="4">
+                                    <Icon type="ios-paper"></Icon>
+                                    Item 4
+                                </MenuItem>
+                            </div>
+                        </Menu>
+                    </i-col>
+                    <i-col span="1">
+                        <Icon type="arrow-expand" size="24"></Icon>
+                    </i-col>
+                    <i-col span="1">
+                        <Icon type="locked" size="24"></Icon>
+                    </i-col>
+                    <i-col span="1">
+                        <Icon type="ios-bell" size="24"></Icon>
+                    </i-col>
+                    <i-col span="4">
+                        <div class="user-dropdown-innercon ivu-row-flex ivu-row-flex-middle ivu-row-flex-end"><div class="ivu-dropdown"><div class="ivu-dropdown-rel"><a href="javascript:void(0)"><span class="main-user-name">iview_admin</span> <i class="ivu-icon ivu-icon-arrow-down-b"></i></a> </div> <!----></div> <span class="ivu-avatar ivu-avatar-circle ivu-avatar-default ivu-avatar-image" style="background: rgb(97, 159, 231); margin-left: 10px;"><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&amp;fm=27&amp;gp=0.jpg"></span></div>
+                    </i-col>
+
+
+
+                   <!-- <div class="full-screen-btn-con">
+                        <div class="ivu-tooltip">
+                            <div class="ivu-tooltip-rel"><i class="ivu-icon ivu-icon-arrow-expand" style="font-size: 23px;"></i></div>
+                            <div class="ivu-tooltip-popper" style="display: none;">
+                                <div class="ivu-tooltip-content">
+                                    <div class="ivu-tooltip-arrow"></div>
+                                    <div class="ivu-tooltip-inner">全屏</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lock-screen-btn-con"><div class="ivu-tooltip"><div class="ivu-tooltip-rel"><i class="ivu-icon ivu-icon-locked" style="font-size: 20px;"></i></div>
+                        <div class="ivu-tooltip-popper" style="display: none;"><div class="ivu-tooltip-content"><div class="ivu-tooltip-arrow"></div> <div class="ivu-tooltip-inner">锁屏</div></div></div></div></div>
+                    <div class="message-con"><div class="ivu-tooltip"><div class="ivu-tooltip-rel"><span class="ivu-badge"><i class="ivu-icon ivu-icon-ios-bell" style="font-size: 22px;"></i> <sup class="ivu-badge-dot" style=""></sup></span></div>
+                        <div class="ivu-tooltip-popper" style="display: none; position: fixed; left: 1650px; top: 41px; transform-origin: center top 0px;" x-placement="bottom"><div class="ivu-tooltip-content"><div class="ivu-tooltip-arrow"></div> <div class="ivu-tooltip-inner">有3条未读消息</div></div></div></div></div> <div style="display: inline-block; padding: 0px 6px;"><div class="ivu-dropdown"><div class="ivu-dropdown-rel"><a href="javascript:void(0)"><i class="ivu-icon ivu-icon-paintbucket" style="font-size: 18px; color: rgb(73, 80, 96); margin-top: -2px; vertical-align: middle;"></i> <i class="ivu-icon ivu-icon-arrow-down-b"></i></a> </div> <div class="ivu-select-dropdown" style="display: none;"><ul class="ivu-dropdown-menu"><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(45, 140, 240);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(0, 168, 84);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(233, 101, 0);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(228, 62, 49);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy-outline" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(45, 140, 240);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy-outline" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(0, 168, 84);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy-outline" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(233, 101, 0);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy-outline" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(228, 62, 49);"></i></span></div></li></ul></div></div></div> <div class="user-dropdown-menu-con"><div class="user-dropdown-innercon ivu-row-flex ivu-row-flex-middle ivu-row-flex-end"><div class="ivu-dropdown"><div class="ivu-dropdown-rel"><a href="javascript:void(0)"><span class="main-user-name">iview_admin</span> <i class="ivu-icon ivu-icon-arrow-down-b"></i></a> </div> &lt;!&ndash;&ndash;&gt;</div> <span class="ivu-avatar ivu-avatar-circle ivu-avatar-default ivu-avatar-image" style="background: rgb(97, 159, 231); margin-left: 10px;"><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&amp;fm=27&amp;gp=0.jpg"></span></div></div>
+-->
+                </Row>
+            </Header>
+            <Content :style="{padding: '0 16px 16px'}">
+                <Breadcrumb :style="{margin: '16px 0'}">
+                    <breadcrumb-item>Home</breadcrumb-item>
+                    <breadcrumb-item>Components</breadcrumb-item>
+                    <breadcrumb-item>Layout</breadcrumb-item>
+                </Breadcrumb>
+                <Card>
+                    <div style="height: 600px">Content</div>
+                </Card>
+            </Content>
+        </Layout>
+    </Layout>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app-layout',
+        data () {
+            return {
+                shrink: false,
+                isCollapsed: false,
+                userName: '',
+                isFullScreen: false
+            };
+        },
+        computed: {
+            rotateIcon () {
+                return [
+                    'menu-icon',
+                    this.isCollapsed ? 'rotate-icon' : ''
+                ];
+            },
+            menuitemClasses: function () {
+                return [
+                    'menu-item',
+                    this.isCollapsed ? 'collapsed-menu' : ''
+                ]
+            }
+        },
+        methods: {
+            collapsedSider () {
+                this.$refs.sider.toggleCollapse();
+            }
+        }
+    })
+</script>
+</body>
+</html>

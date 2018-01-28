@@ -1,5 +1,3 @@
-Vue.use(Vuex);
-
 const app = {
     state: {
         cachePage: [],
@@ -22,11 +20,11 @@ const app = {
             }
         ], // 面包屑数组
         menuList: [],
-        routers: [
-            otherRouter,
-            ...appRouter
-        ],
-        tagsList: [...otherRouter.children],
+        // routers: [
+        //     otherRouter,
+        //     ...appRouter
+        // ],
+        // tagsList: [...otherRouter.children],
         messageCount: 0,
         dontCache: ['text-editor', 'artical-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
     },
@@ -159,7 +157,7 @@ const app = {
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
         },
         setOpenedList (state) {
-            state.pageOpenedList = localStorage.pageOpenedList ? JSON.parse(localStorage.pageOpenedList) : [otherRouter.children[0]];
+            // state.pageOpenedList = localStorage.pageOpenedList ? JSON.parse(localStorage.pageOpenedList) : [otherRouter.children[0]];
         },
         setCurrentPath (state, pathArr) {
             state.currentPath = pathArr;

@@ -28,6 +28,16 @@ public class ExampleController {
         return "example/layout";
     }
 
+    @GetMapping("/layout1")
+    public String layout1() {
+        return "example/layout1";
+    }
+
+    @GetMapping("/layout2")
+    public String layout2() {
+        return "example/layout2";
+    }
+
     @GetMapping("/grid")
     public String grid() {
         return "example/grid";
@@ -61,5 +71,10 @@ public class ExampleController {
     @GetMapping("/main")
     public String main() {
         return "example/main";
+    }
+
+    @GetMapping("/main1")
+    public String main1() {
+        return "example/main1";
     }
 }
