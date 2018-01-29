@@ -6,11 +6,12 @@
     <link rel="stylesheet" type="text/css" href="style/iview.css">
     <script type="text/javascript" src="js/vue.js"></script>
     <script type="text/javascript" src="js/iview.min.js"></script>
+    <script type="text/javascript" src="js/vue/vuex.js"></script>
+    <script type="text/javascript" src="js/vue/vue-router.js"></script>
+    <script type="text/javascript" src="js/store/store.js"></script>
+    <script type="text/javascript" src="js/router/router.js"></script>
+    <script type="text/javascript" src="js/component/tags-page-opened/tags-page-opened.js"></script>
     <style scoped>
-        .layout-con{
-            height: 100%;
-            width: 100%;
-        }
         .logo-con {
             padding: 8px;
             text-align: center;
@@ -26,11 +27,26 @@
             position: relative;
             z-index: 11;
         }
-        .main-header i {
+        .main-header i{
+            cursor: pointer;
+        }
+        .main-header-menu {
+            text-align: right;
+            margin-right: 15px;
+            margin-top: 20px;
+        }
+        .main-header-rotate{
             margin: 20px 20px 0;
         }
         .header-icon {
             margin-top: 22px;
+        }
+        .user-dropdown-innercon{
+            margin-top: 15px;
+            margin-right: 15px;
+        }
+        .main-header-avatar {
+            margin-left: 15px;
         }
         .layout-header-bar{
             background: #fff;
@@ -118,7 +134,7 @@
             <Header class="main-header">
                 <Row>
                     <i-col span="1">
-                        <Icon @click.native="collapsedSider" :class="rotateIcon" type="navicon-round" size="24"></Icon>
+                        <Icon @click.native="collapsedSider" :class="rotateIcon" class="main-header-rotate" type="navicon-round" size="24"></Icon>
                     </i-col>
                     <i-col span="4">
                         <Breadcrumb class="header-icon">
@@ -127,20 +143,29 @@
                             <breadcrumb-item>添加用户</breadcrumb-item>
                         </Breadcrumb>
                     </i-col>
-                    <i-col span="3" offset="13">
-                        <i-menu mode="horizontal" active-name="1">
-                                <MenuItem name="1">
-                                    <Icon type="arrow-expand" size="24"></Icon>
-                                </MenuItem>
-                                <MenuItem name="2">
-                                    <Icon type="locked" size="24"></Icon>
-                                </MenuItem>
-                                <MenuItem name="3">
-                                    <Icon type="ios-bell" size="24"></Icon>
-                                </MenuItem>
-                        </i-menu>
+                    <i-col span="3" offset="14">
+                        <Row class="main-header-menu">
+                            <i-col span="5" offset="9">
+                                <Tooltip content="全屏" placement="bottom">
+                                    <Icon type="arrow-expand" size="23"></Icon>
+                                </Tooltip>
+                            </i-col>
+                            <i-col span="5">
+                                <Tooltip content="锁屏" placement="bottom">
+                                    <Icon type="locked" size="23"></Icon>
+                                </Tooltip>
+                            </i-col>
+                            <i-col span="5">
+                                <Tooltip content="你有3条未读消息" placement="bottom">
+                                    <Badge dot>
+                                        <Icon type="ios-bell" size="23"></Icon>
+                                    </Badge>
+                                </Tooltip>
+                            </i-col>
+                        </Row>
+
                     </i-col>
-                    <i-col span="3">
+                    <i-col span="2">
                         <!--<div class="user-dropdown-innercon ivu-row-flex ivu-row-flex-middle ivu-row-flex-end"><div class="ivu-dropdown"><div class="ivu-dropdown-rel"><a href="javascript:void(0)"><span class="main-user-name">iview_admin</span> <i class="ivu-icon ivu-icon-arrow-down-b"></i></a> </div> &lt;!&ndash;&ndash;&gt;</div> <span class="ivu-avatar ivu-avatar-circle ivu-avatar-default ivu-avatar-image" style="background: rgb(97, 159, 231); margin-left: 10px;"><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&amp;fm=27&amp;gp=0.jpg"></span></div>-->
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
                             <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
@@ -148,33 +173,18 @@
                                     <span class="main-user-name">{{ userName }}</span>
                                     <Icon type="arrow-down-b"></Icon>
                                 </a>
-                                <DropdownMenu slot="list">
-                                    <DropdownItem name="ownSpace">个人中心</DropdownItem>
-                                    <DropdownItem name="loginout" divided>退出登录</DropdownItem>
-                                </DropdownMenu>
+                                <dropdown-menu slot="list">
+                                    <dropdown-item name="ownSpace">个人中心</dropdown-item>
+                                    <dropdown-item name="loginout" divided>退出登录</dropdown-item>
+                                </dropdown-menu>
                             </Dropdown>
-                            <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
+                            <!--<Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar>-->
+                            <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" class="main-header-avatar" />
                         </Row>
                     </i-col>
-
-
-
-                   <!-- <div class="full-screen-btn-con">
-                        <div class="ivu-tooltip">
-                            <div class="ivu-tooltip-rel"><i class="ivu-icon ivu-icon-arrow-expand" style="font-size: 23px;"></i></div>
-                            <div class="ivu-tooltip-popper" style="display: none;">
-                                <div class="ivu-tooltip-content">
-                                    <div class="ivu-tooltip-arrow"></div>
-                                    <div class="ivu-tooltip-inner">全屏</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lock-screen-btn-con"><div class="ivu-tooltip"><div class="ivu-tooltip-rel"><i class="ivu-icon ivu-icon-locked" style="font-size: 20px;"></i></div>
-                        <div class="ivu-tooltip-popper" style="display: none;"><div class="ivu-tooltip-content"><div class="ivu-tooltip-arrow"></div> <div class="ivu-tooltip-inner">锁屏</div></div></div></div></div>
-                    <div class="message-con"><div class="ivu-tooltip"><div class="ivu-tooltip-rel"><span class="ivu-badge"><i class="ivu-icon ivu-icon-ios-bell" style="font-size: 22px;"></i> <sup class="ivu-badge-dot" style=""></sup></span></div>
-                        <div class="ivu-tooltip-popper" style="display: none; position: fixed; left: 1650px; top: 41px; transform-origin: center top 0px;" x-placement="bottom"><div class="ivu-tooltip-content"><div class="ivu-tooltip-arrow"></div> <div class="ivu-tooltip-inner">有3条未读消息</div></div></div></div></div> <div style="display: inline-block; padding: 0px 6px;"><div class="ivu-dropdown"><div class="ivu-dropdown-rel"><a href="javascript:void(0)"><i class="ivu-icon ivu-icon-paintbucket" style="font-size: 18px; color: rgb(73, 80, 96); margin-top: -2px; vertical-align: middle;"></i> <i class="ivu-icon ivu-icon-arrow-down-b"></i></a> </div> <div class="ivu-select-dropdown" style="display: none;"><ul class="ivu-dropdown-menu"><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(45, 140, 240);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(0, 168, 84);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(233, 101, 0);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(228, 62, 49);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy-outline" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(45, 140, 240);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy-outline" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(0, 168, 84);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy-outline" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(233, 101, 0);"></i></span></div></li><li class="ivu-dropdown-item"><div class="ivu-row-flex ivu-row-flex-middle ivu-row-flex-center"><span style="margin-right: 10px;"><i class="ivu-icon ivu-icon-happy-outline" style="font-size: 20px; color: rgb(73, 80, 96);"></i></span> <span><i class="ivu-icon ivu-icon-record" style="font-size: 22px; color: rgb(228, 62, 49);"></i></span></div></li></ul></div></div></div> <div class="user-dropdown-menu-con"><div class="user-dropdown-innercon ivu-row-flex ivu-row-flex-middle ivu-row-flex-end"><div class="ivu-dropdown"><div class="ivu-dropdown-rel"><a href="javascript:void(0)"><span class="main-user-name">iview_admin</span> <i class="ivu-icon ivu-icon-arrow-down-b"></i></a> </div> &lt;!&ndash;&ndash;&gt;</div> <span class="ivu-avatar ivu-avatar-circle ivu-avatar-default ivu-avatar-image" style="background: rgb(97, 159, 231); margin-left: 10px;"><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&amp;fm=27&amp;gp=0.jpg"></span></div></div>
--->
+                </Row>
+                <Row>
+                    <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
                 </Row>
             </Header>
             <Content :style="{padding: '0 16px 16px'}">
@@ -194,11 +204,13 @@
 <script>
     var vm = new Vue({
         el: '#app-layout',
+        router: router,
+        store: store,
         data () {
             return {
                 shrink: false,
                 isCollapsed: false,
-                userName: '',
+                userName: '超级管理员',
                 isFullScreen: false
             };
         },
@@ -208,6 +220,9 @@
                     'menu-icon',
                     this.isCollapsed ? 'rotate-icon' : ''
                 ];
+            },
+            pageTagsList () {
+                return this.$store.state.app.pageOpenedList; // 打开的页面的页面对象
             },
             menuitemClasses: function () {
                 return [
@@ -219,6 +234,21 @@
         methods: {
             collapsedSider () {
                 this.$refs.sider.toggleCollapse();
+            },
+            handleClickUserDropdown (name) {
+                if (name === 'ownSpace') {
+                    util.openNewPage(this, 'ownspace_index');
+                    this.$router.push({
+                        name: 'ownspace_index'
+                    });
+                } else if (name === 'loginout') {
+                    // 退出登录
+                    this.$store.commit('logout', this);
+                    this.$store.commit('clearOpenedSubmenu');
+                    this.$router.push({
+                        name: 'login'
+                    });
+                }
             }
         }
     })
